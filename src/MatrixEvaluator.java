@@ -30,7 +30,7 @@ public class MatrixEvaluator {
      * matrix into a String, then remove all whitespace from the String.
      *
      * @param matrixString A string to store the matrix read from the file
-     * @return the matrix as a  string with whitespace removed
+     * @return The matrix as a  string with whitespace removed
      */
     public static String readMatrixFile(String matrixString) {
         Scanner userInput = new Scanner(System.in);
@@ -85,7 +85,7 @@ public class MatrixEvaluator {
     /**
      * getVertexSequence - Get the sequence of vertices from the user.
      *
-     * @return the sequence of vertices entered by the user
+     * @return The sequence of vertices entered by the user
      */
     public static String getVertexSequence() {
         // Ask the user to input a sequence of vertices
@@ -95,15 +95,83 @@ public class MatrixEvaluator {
         return vertexScanner.nextLine();
     }
 
+    public static void isWalk(String vertexSequence, int[][] matrix) {
+
+        for (int i = 0; i < vertexSequence.length(); i++) {
+            char c = vertexSequence.charAt(i);
+            if (c == ',') {
+                char leftHandVertex = vertexSequence.charAt(i - 1);
+                char rightHandVertex = vertexSequence.charAt(i + 1);
+                int leftVertexIndex = vertexToIntIndex(leftHandVertex);
+                int rightVertexIndex = vertexToIntIndex(rightHandVertex);
+                System.out.println("Left Hand Index: " + leftVertexIndex);
+                System.out.println("Right Hand Index: " + rightVertexIndex);
+                boolean edgeExists = matrix[leftVertexIndex][rightVertexIndex] == 1;
+                System.out.println("The edge exists: " + edgeExists); // Debug
+            }
+
+        }
+
+
+
+
+
+    }
+
+    /**
+     * vertexToIntIndex - Converts a vertex char ('a' through 'j') to its corresponding int
+     * index (0 through 9). If the given vertex character is not within the valid range then
+     * return 0. The int index will be used to see if an edge exists between two vertices.
+     *
+     * @param vertex The vertex character to convert.
+     * @return The integer index corresponding to the vertex character.
+     */
+    public static int vertexToIntIndex(char vertex) {
+        int index;
+        switch (vertex) {
+            case 'a':
+                index = 0;
+                break;
+            case 'b':
+                index = 1;
+                break;
+            case 'c':
+                index = 2;
+                break;
+            case 'd':
+                index = 3;
+                break;
+            case 'e':
+                index = 4;
+                break;
+            case 'f':
+                index = 5;
+                break;
+            case 'g':
+                index = 6;
+                break;
+            case 'h':
+                index = 7;
+                break;
+            case 'i':
+                index = 8;
+                break;
+            case 'j':
+                index = 9;
+                break;
+            default:
+                index = 0;
+        }
+        return index;
+    }
+
     public static void main(String args[]) {
 
-        // Read the matrix from the file into a 2D array
+        // Variables with properties of the matrix
         int matrixRows = 10;
         int matrixColumns = 10;
         int[][] matrix = new int[matrixRows][matrixColumns];
-
-
-        String matrixString = null;
+        String matrixString = null; // Used to convert the .txt file to a String
 
         // Read the file containing the matrix into a String
         matrixString = readMatrixFile(matrixString);
@@ -116,8 +184,18 @@ public class MatrixEvaluator {
         vertexSequence = getVertexSequence();
         System.out.println(vertexSequence); //Debug line
 
+        // Determine if the sequence of vertices is a walk, and if so the length of the
+        // walk, and what type of walk (open, closed, trail, path, circuit, cycle)
+        isWalk(vertexSequence, matrix);
 
+        //Debug test index conversion
+        char a = 'a';
+        char b = 'b';
+        int num1 = vertexToIntIndex(a);
+        int num2 = vertexToIntIndex(b);
+        System.out.println("The index of " + a + b + " is:" + num1 + num2);
 
+        // Find the various closures of the graph
 
     }
 }
