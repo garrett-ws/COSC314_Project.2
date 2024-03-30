@@ -117,16 +117,16 @@ public class MatrixEvaluator {
         }
 
         if (edgeExists) {
+            boolean openWalk = openOrClosedWalk(vertexSequence);
             lengthOfWalk(vertexSequence);
 
+            if (openWalk) {
+
+            } else {
+
+            }
+
         }
-
-
-
-
-
-
-
     }
 
     /**
@@ -183,7 +183,7 @@ public class MatrixEvaluator {
      * representing the vertex sequence that is the walk, as the number of commas will be
      * equal to the number of edges.
      *
-     * @param vertexSequence The sequence of vertices represented as a string.
+     * @param vertexSequence A string representing a sequence of vertices.
      */
     public static void lengthOfWalk(String vertexSequence) {
         int lengthOfWalk = 0;
@@ -194,6 +194,29 @@ public class MatrixEvaluator {
             }
         }
         System.out.println("The length of the walk is " + lengthOfWalk);
+    }
+
+    /**
+     * openOrClosedWalk - Determines whether a given sequence of vertices represents an open
+     * or closed walk.
+     *
+     * @param vertexSequence A string representing a sequence of vertices.
+     * @return {@code true} if the walk is open, or {@code false} if it is closed.
+     */
+    public static boolean openOrClosedWalk(String vertexSequence) {
+        char firstVertex = vertexSequence.charAt(0);
+        char lastVertex = vertexSequence.charAt(0);
+        for (int i = 0; i < vertexSequence.length(); i++) {
+            char c = vertexSequence.charAt(i);
+            lastVertex = vertexSequence.charAt(i);
+        }
+        if (firstVertex != lastVertex) {
+            System.out.println("It is an open walk");
+            return true;
+        } else {
+            System.out.println("It is a closed walk");
+            return false;
+        }
     }
 
     public static void main(String args[]) {
