@@ -37,13 +37,28 @@ public class MatrixEvaluator {
         try {
             matrixInput = new BufferedReader(new FileReader(matrixFile));
 
-            String fileLine;
-            while ((fileLine = matrixInput.readLine()) != null) {
-                System.out.println(fileLine);
-                //Convert the line printing to reading each char into a 2d array
-                //Then print array to test
+            int fileChar;
+            int row = 0;
+            int col = 0;
+            while ((fileChar = matrixInput.read()) != -1) {
+                char matrixChar = (char) fileChar;
+                if (matrixChar != '\n' && matrixChar != '\r') {
+                    matrix[row][col] = Character.getNumericValue(matrixChar);
+                    col++;
+                    if (col >= matrixColumns) {
+                        col = 0;
+                        row++;
+                        // Check if the row exceeds the matrixRows after incrementing
+                        if (row >= matrixRows) {
+                            // Handle the case where the matrix is larger than expected
+                            System.out.println("Matrix size exceeds expected dimensions.");
+                            break;
+                        }
+                    }
+                }
             }
 
+        // Should probably update the error catching a bit, but this will work for now
         } catch (IOException error) {
             error.printStackTrace();
         } finally {
@@ -54,6 +69,14 @@ public class MatrixEvaluator {
             }
         }
 
+        //Debug
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                System.out.print(matrix[i][j]);
+            }
+            System.out.println();
+
+        }
 
 
 
