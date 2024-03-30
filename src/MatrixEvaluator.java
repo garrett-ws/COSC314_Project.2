@@ -20,23 +20,28 @@
 import java.io.*;
 import java.util.Scanner;
 
+
+
+
 public class MatrixEvaluator {
 
-    public static void main(String args[]) {
-
-        // Read the matrix from the file into a 2D array
-        int matrixRows = 10;
-        int matrixColumns = 10;
-        int[][] matrix = new int[matrixRows][matrixColumns];
+    /**
+     * readMatrixFile - Reads a matrix from a file and returns it as a single string.
+     *
+     * Prompt the user to input the name of the file containing the matrix, read the
+     * matrix into a String, then remove all whitespace from the String.
+     *
+     * @param matrixString a string to store the matrix read from the file
+     * @return the matrix as a  string with whitespace removed
+     */
+    public static String readMatrixFile(String matrixString) {
         Scanner userInput = new Scanner(System.in);
         System.out.println("Enter the name of the file that has the matrix: ");
         String fileName = userInput.nextLine();
         File matrixFile = new File(fileName);
-        String matrixString = null;
+
         StringBuilder buildMatrixString = new StringBuilder();
-
         BufferedReader matrixBuffered = null;
-
 
         try {
             matrixBuffered = new BufferedReader(new FileReader(matrixFile));
@@ -48,7 +53,9 @@ public class MatrixEvaluator {
             matrixString = buildMatrixString.toString(); // Convert the StringBuilder to a String
             matrixString = matrixString.replaceAll("\\s",""); // Remove all whitespace from the String
 
-        // Should probably update the error catching a bit, but this will work for now
+
+
+            // Should probably update the error catching a bit, but this will work for now
         } catch (IOException error) {
             error.printStackTrace();
         } finally {
@@ -58,13 +65,18 @@ public class MatrixEvaluator {
                 error.printStackTrace();
             }
         }
+        return matrixString;
+    }
 
-        //Debug
-        if (!matrixString.isEmpty()) {
-            System.out.println(matrixString);
-        }
-
-        // Convert the String into a 2D int array
+    /**
+     * convertStringTo2DIntArray - Converts a string representation of a matrix into a 2D integer array.
+     *
+     * @param matrixRows    The number of rows in the matrix.
+     * @param matrixColumns The number of columns in the matrix.
+     * @param matrix        The 2D integer array to store the converted matrix.
+     * @param matrixString  The string representation of the matrix.
+     */
+    public static void convertStringTo2DIntArray(int matrixRows, int matrixColumns, int[][] matrix, String matrixString) {
         int strIdx = 0;
         for (int i = 0; i < matrixRows; i++) {
             for (int j = 0; j < matrixColumns; j++) {
@@ -72,6 +84,23 @@ public class MatrixEvaluator {
                 strIdx++;
             }
         }
+    }
+
+    public static void main(String args[]) {
+
+        // Read the matrix from the file into a 2D array
+        int matrixRows = 10;
+        int matrixColumns = 10;
+        int[][] matrix = new int[matrixRows][matrixColumns];
+
+
+        String matrixString = null;
+
+        // Read the file containing the matrix into a String
+        matrixString = readMatrixFile(matrixString);
+
+        // Convert the String into a 2D int array
+        convertStringTo2DIntArray(matrixRows, matrixColumns, matrix, matrixString);
 
         //Debug, print array
         for (int i = 0; i < matrixRows; i++) {
