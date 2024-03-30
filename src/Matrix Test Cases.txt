@@ -1,0 +1,6 @@
+Matrix 1:
+
+Matrix 2:
+
+j,a,a,d,b
+Walk, 4

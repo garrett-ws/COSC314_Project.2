@@ -117,15 +117,11 @@ public class MatrixEvaluator {
         }
 
         if (edgeExists) {
-            int lengthOfWalk = 0;
-            for (int i = 0; i < vertexSequence.length(); i++) {
-                char c = vertexSequence.charAt(i);
-                if (c == ',') {
-                    lengthOfWalk++;
-                }
-            }
-            System.out.println("The length of the walk is " + lengthOfWalk);
+            lengthOfWalk(vertexSequence);
+
         }
+
+
 
 
 
@@ -178,6 +174,26 @@ public class MatrixEvaluator {
                 index = 0;
         }
         return index;
+    }
+
+    /**
+     * lengthOfWalk - Calculates the length of a walk based on a sequence of vertices.
+     *
+     * The length of the walk is determined by counting the number of commas in the String
+     * representing the vertex sequence that is the walk, as the number of commas will be
+     * equal to the number of edges.
+     *
+     * @param vertexSequence The sequence of vertices represented as a string.
+     */
+    public static void lengthOfWalk(String vertexSequence) {
+        int lengthOfWalk = 0;
+        for (int i = 0; i < vertexSequence.length(); i++) {
+            char c = vertexSequence.charAt(i);
+            if (c == ',') {
+                lengthOfWalk++;
+            }
+        }
+        System.out.println("The length of the walk is " + lengthOfWalk);
     }
 
     public static void main(String args[]) {
