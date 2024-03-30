@@ -97,6 +97,7 @@ public class MatrixEvaluator {
 
     public static void isWalk(String vertexSequence, int[][] matrix) {
 
+        boolean edgeExists = false;
         for (int i = 0; i < vertexSequence.length(); i++) {
             char c = vertexSequence.charAt(i);
             if (c == ',') {
@@ -104,12 +105,26 @@ public class MatrixEvaluator {
                 char rightHandVertex = vertexSequence.charAt(i + 1);
                 int leftVertexIndex = vertexToIntIndex(leftHandVertex);
                 int rightVertexIndex = vertexToIntIndex(rightHandVertex);
-                System.out.println("Left Hand Index: " + leftVertexIndex);
-                System.out.println("Right Hand Index: " + rightVertexIndex);
-                boolean edgeExists = matrix[leftVertexIndex][rightVertexIndex] == 1;
-                System.out.println("The edge exists: " + edgeExists); // Debug
-            }
+                edgeExists = matrix[leftVertexIndex][rightVertexIndex] == 1;
 
+                // If a single edge doesn't exist in the vertex sequence then
+                // it is not a walk and we can break out of the for loop
+                if (edgeExists == false) {
+                    System.out.println("This is not a walk");
+                    break;
+                }
+            }
+        }
+
+        if (edgeExists) {
+            int lengthOfWalk = 0;
+            for (int i = 0; i < vertexSequence.length(); i++) {
+                char c = vertexSequence.charAt(i);
+                if (c == ',') {
+                    lengthOfWalk++;
+                }
+            }
+            System.out.println("The length of the walk is " + lengthOfWalk);
         }
 
 
@@ -187,13 +202,6 @@ public class MatrixEvaluator {
         // Determine if the sequence of vertices is a walk, and if so the length of the
         // walk, and what type of walk (open, closed, trail, path, circuit, cycle)
         isWalk(vertexSequence, matrix);
-
-        //Debug test index conversion
-        char a = 'a';
-        char b = 'b';
-        int num1 = vertexToIntIndex(a);
-        int num2 = vertexToIntIndex(b);
-        System.out.println("The index of " + a + b + " is:" + num1 + num2);
 
         // Find the various closures of the graph
 
