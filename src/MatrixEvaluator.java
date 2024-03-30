@@ -32,51 +32,55 @@ public class MatrixEvaluator {
         System.out.println("Enter the name of the file that has the matrix: ");
         String fileName = userInput.nextLine();
         File matrixFile = new File(fileName);
+        String matrixString = null;
+        StringBuilder buildMatrixString = new StringBuilder();
 
-        BufferedReader matrixInput = null;
+        BufferedReader matrixBuffered = null;
+
+
         try {
-            matrixInput = new BufferedReader(new FileReader(matrixFile));
+            matrixBuffered = new BufferedReader(new FileReader(matrixFile));
 
-            int fileChar;
-            int row = 0;
-            int col = 0;
-            while ((fileChar = matrixInput.read()) != -1) {
-                char matrixChar = (char) fileChar;
-                if (matrixChar != '\n' && matrixChar != '\r') {
-                    matrix[row][col] = Character.getNumericValue(matrixChar);
-                    col++;
-                    if (col >= matrixColumns) {
-                        col = 0;
-                        row++;
-                        // Check if the row exceeds the matrixRows after incrementing
-                        if (row >= matrixRows) {
-                            // Handle the case where the matrix is larger than expected
-                            System.out.println("Matrix size exceeds expected dimensions.");
-                            break;
-                        }
-                    }
-                }
+            String fileLine;
+            while ((fileLine = matrixBuffered.readLine()) != null) {
+                buildMatrixString.append(fileLine);
             }
+            matrixString = buildMatrixString.toString(); // Convert the StringBuilder to a String
+            matrixString = matrixString.replaceAll("\\s",""); // Remove all whitespace from the String
 
         // Should probably update the error catching a bit, but this will work for now
         } catch (IOException error) {
             error.printStackTrace();
         } finally {
             try {
-                matrixInput.close();
+                matrixBuffered.close();
             } catch (IOException error) {
                 error.printStackTrace();
             }
         }
 
         //Debug
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j++) {
-                System.out.print(matrix[i][j]);
+        if (!matrixString.isEmpty()) {
+            System.out.println(matrixString);
+        }
+
+        // Convert the String into a 2D int array
+        int strIdx = 0;
+        for (int i = 0; i < matrixRows; i++) {
+            for (int j = 0; j < matrixColumns; j++) {
+                matrix[i][j] = matrixString.charAt(strIdx) - '0';
+                strIdx++;
+            }
+        }
+
+        //Debug, print array
+        for (int i = 0; i < matrixRows; i++) {
+            for (int j = 0; j < matrixColumns; j++) {
+                System.out.print(matrix[i][j] + " ");
             }
             System.out.println();
-
         }
+
 
 
 
