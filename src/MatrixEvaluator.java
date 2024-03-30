@@ -18,10 +18,8 @@
  */
 
 import java.io.*;
+import java.util.LinkedList;
 import java.util.Scanner;
-
-
-
 
 public class MatrixEvaluator {
 
@@ -31,12 +29,12 @@ public class MatrixEvaluator {
      * Prompt the user to input the name of the file containing the matrix, read the
      * matrix into a String, then remove all whitespace from the String.
      *
-     * @param matrixString a string to store the matrix read from the file
+     * @param matrixString A string to store the matrix read from the file
      * @return the matrix as a  string with whitespace removed
      */
     public static String readMatrixFile(String matrixString) {
         Scanner userInput = new Scanner(System.in);
-        System.out.println("Enter the name of the file that has the matrix: ");
+        System.out.println("Enter the name of the file that has the matrix ");
         String fileName = userInput.nextLine();
         File matrixFile = new File(fileName);
 
@@ -52,8 +50,6 @@ public class MatrixEvaluator {
             }
             matrixString = buildMatrixString.toString(); // Convert the StringBuilder to a String
             matrixString = matrixString.replaceAll("\\s",""); // Remove all whitespace from the String
-
-
 
             // Should probably update the error catching a bit, but this will work for now
         } catch (IOException error) {
@@ -86,6 +82,19 @@ public class MatrixEvaluator {
         }
     }
 
+    /**
+     * getVertexSequence - Get the sequence of vertices from the user.
+     *
+     * @return the sequence of vertices entered by the user
+     */
+    public static String getVertexSequence() {
+        // Ask the user to input a sequence of vertices
+        System.out.println("Enter a sequence of vertices using the letters 'a' through 'j' " +
+                "separated by commas (no space in between)");
+        Scanner vertexScanner = new Scanner(System.in);
+        return vertexScanner.nextLine();
+    }
+
     public static void main(String args[]) {
 
         // Read the matrix from the file into a 2D array
@@ -102,13 +111,10 @@ public class MatrixEvaluator {
         // Convert the String into a 2D int array
         convertStringTo2DIntArray(matrixRows, matrixColumns, matrix, matrixString);
 
-        //Debug, print array
-        for (int i = 0; i < matrixRows; i++) {
-            for (int j = 0; j < matrixColumns; j++) {
-                System.out.print(matrix[i][j] + " ");
-            }
-            System.out.println();
-        }
+        // Ask the user to input a sequence of vertices
+        String vertexSequence = null;
+        vertexSequence = getVertexSequence();
+        System.out.println(vertexSequence); //Debug line
 
 
 
