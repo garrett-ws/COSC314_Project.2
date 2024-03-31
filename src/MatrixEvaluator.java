@@ -99,8 +99,8 @@ public class MatrixEvaluator {
 
         boolean edgeExists = false;
         for (int i = 0; i < vertexSequence.length(); i++) {
-            char c = vertexSequence.charAt(i);
-            if (c == ',') {
+            char comma = vertexSequence.charAt(i);
+            if (comma == ',') {
                 char leftHandVertex = vertexSequence.charAt(i - 1);
                 char rightHandVertex = vertexSequence.charAt(i + 1);
                 int leftVertexIndex = vertexToIntIndex(leftHandVertex);
@@ -119,12 +119,13 @@ public class MatrixEvaluator {
         if (edgeExists) {
             boolean openWalk = openOrClosedWalk(vertexSequence);
             lengthOfWalk(vertexSequence);
+            boolean trailOrCircuit = isTrailOrCircuit(vertexSequence);
 
-            if (openWalk) {
-
-            } else {
-
-            }
+//            if (openWalk) {
+//
+//            } else {
+//
+//            }
 
         }
     }
@@ -217,6 +218,35 @@ public class MatrixEvaluator {
             System.out.println("It is a closed walk");
             return false;
         }
+    }
+
+    /**
+     * isTrailOrCircuit - Determines whether the given walk represents a trail or circuit.
+     *
+     * The function checks if an edge is repeated, if any edge is repeated then the walk is
+     * neither a trail nor a circuit. If no edges are repeated then the walk is a trail (if
+     * open) or a circuit (if closed).
+     *
+     * @param vertexSequence A string representing a sequence of vertices.
+     * @return {@code true} if the walk does not repeat an edge, {@code false} otherwise
+     */
+    public static boolean isTrailOrCircuit(String vertexSequence) {
+        boolean trailOrCircuit = true;
+        LinkedList<String> edgesVisitedList = new LinkedList<>();
+        for (int i = 0; i < vertexSequence.length(); i++) {
+            char comma = vertexSequence.charAt(i);
+            if (comma == ',') {
+                char leftHandVertex = vertexSequence.charAt(i - 1);
+                char rightHandVertex = vertexSequence.charAt(i + 1);
+                String edgeVisited = leftHandVertex + "," + rightHandVertex;
+                if (edgesVisitedList.contains(edgeVisited)) {
+                    trailOrCircuit = false;
+                    break;
+                }
+                edgesVisitedList.add(edgeVisited);
+            }
+        }
+        return trailOrCircuit;
     }
 
     public static void main(String args[]) {
