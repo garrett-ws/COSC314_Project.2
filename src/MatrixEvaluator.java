@@ -122,11 +122,21 @@ public class MatrixEvaluator {
             boolean trailOrCircuit = isTrailOrCircuit(vertexSequence);
             boolean pathOrCycle = isPathOrCycle(vertexSequence);
 
-//            if (openWalk) {
-//
-//            } else {
-//
-//            }
+            if (openWalk) {
+                if (trailOrCircuit) {
+                    System.out.println("It is a trail");
+                    if (pathOrCycle) {
+                        System.out.println("It is a path");
+                    }
+                }
+            } else {
+                if (trailOrCircuit) {
+                    System.out.println("It is a circuit");
+                    if (pathOrCycle) {
+                        System.out.println("It is a cycle");
+                    }
+                }
+            }
 
         }
     }
