@@ -95,8 +95,18 @@ public class MatrixEvaluator {
         return vertexScanner.nextLine();
     }
 
+    /**
+     * isWalk - Determines if the given vertex sequence represents a walk, and if so if it is an open or closed walk.
+     * If the vertex sequence is a walk, then other functions are called to determine if the walk is a trail, path,
+     * circuit, or cycle.
+     *
+     * @param vertexSequence A string representing a sequence of vertices
+     * @param matrix         A 2D array representing the adjacency matrix of the digraph
+     */
     public static void isWalk(String vertexSequence, int[][] matrix) {
 
+        // Evaluate if an edge exists for each pair of vertices in the
+        // input sequence.
         boolean edgeExists = false;
         for (int i = 0; i < vertexSequence.length(); i++) {
             char comma = vertexSequence.charAt(i);
@@ -116,6 +126,10 @@ public class MatrixEvaluator {
             }
         }
 
+        // If an edge exists for each pair of vertices in the input sequence then
+        // evaluate if the walk is open or closed. If an open walk evaluate if it
+        // is also a trail and path. If closed evaluate if it is also a circuit
+        // or a cycle.
         if (edgeExists) {
             boolean openWalk = openOrClosedWalk(vertexSequence);
             lengthOfWalk(vertexSequence);
@@ -137,7 +151,6 @@ public class MatrixEvaluator {
                     }
                 }
             }
-
         }
     }
 
