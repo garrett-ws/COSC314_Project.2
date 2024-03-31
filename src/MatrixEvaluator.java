@@ -120,6 +120,7 @@ public class MatrixEvaluator {
             boolean openWalk = openOrClosedWalk(vertexSequence);
             lengthOfWalk(vertexSequence);
             boolean trailOrCircuit = isTrailOrCircuit(vertexSequence);
+            boolean pathOrCycle = isPathOrCycle(vertexSequence);
 
 //            if (openWalk) {
 //
@@ -247,6 +248,42 @@ public class MatrixEvaluator {
             }
         }
         return trailOrCircuit;
+    }
+
+    /**
+     * isPathOrCycle - Determines whether the given vertex sequence represents a path or cycle.
+     *
+     * The function checks if a vertex is repeated (except for the first and last vertices being
+     * the same). If a vertex is repeated then the walk is neither a path nor a cycle. If no
+     * vertices are repeated, then the walk is a path (if open) or a cycle (if closed).
+     *
+     * @param vertexSequence A string representing a sequence of vertices
+     * @return {@code true} if the walk does not repeat a vertex, {@code false} otherwise
+     */
+    public static boolean isPathOrCycle(String vertexSequence) {
+        boolean pathOrCycle = true;
+        LinkedList<Character> verticesVisitedList = new LinkedList<>();
+        for (int i = 0; i < vertexSequence.length(); i++) {
+            char vertex = vertexSequence.charAt(i);
+
+            // For closed walks the first and last vertex will always be
+            // the same. To avoid giving a false negative for this match
+            // we will break the loop early for closed walks. Since an
+            // open walk has a different beginning and ending vertex the
+            // loop won't terminate early for an open walk.
+            if (i == vertexSequence.length() - 1) {
+                if (vertexSequence.charAt(0) == vertexSequence.charAt(i)) {
+                    break;
+                }
+            }
+            if (verticesVisitedList.contains(vertex)){
+                pathOrCycle = false;
+                break;
+            }
+            verticesVisitedList.add(vertex);
+
+        }
+        return pathOrCycle;
     }
 
     public static void main(String args[]) {
