@@ -301,7 +301,9 @@ public class MatrixEvaluator {
                 pathOrCycle = false;
                 break;
             }
-            verticesVisitedList.add(vertex);
+            if (vertex != ',') {
+                verticesVisitedList.add(vertex);
+            }
 
         }
         return pathOrCycle;
