@@ -18,6 +18,7 @@
  */
 
 import java.io.*;
+import java.nio.file.*;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -346,7 +347,7 @@ public class MatrixEvaluator {
      * @param matrix The input matrix for which to find the symmetric closure
      * @return The symmetric closure of the input matrix as a 2D int array
      */
-    private static int[][] generateSymmetricMatrix(int[][] matrix) {
+    public static int[][] generateSymmetricMatrix(int[][] matrix) {
         int symmetricRows = matrix.length;
         int symmetricCol = matrix[0].length;
         int[][] symmetricMatrix = new int[symmetricRows][symmetricCol];
@@ -367,6 +368,41 @@ public class MatrixEvaluator {
             }
         }
         return symmetricMatrix;
+    }
+
+    /**
+     * writeMatrixToFile - Writes a matrix to a file.
+     *
+     * @param matrix   The 2D int array representing the matrix.
+     * @param fileName The name of the file to write the matrix to.
+     */
+    public static void writeMatrixToFile(int[][] matrix, String fileName) {
+        int matrixRows = matrix.length;
+        int matrixCol = matrix[0].length;
+
+        // Delete the output file if it already exists. This is to prevent
+        // the same file being appended to upon subsequent uses of the program
+        // when testing the output.
+        Path filePath = Paths.get(fileName);
+        if (Files.exists(filePath)) {
+            try {
+                Files.delete(filePath);
+            } catch (IOException error) {
+                error.printStackTrace();
+            }
+        }
+
+        // Write the given matrix to the file
+        try (BufferedWriter writeMatrix = new BufferedWriter(new FileWriter(fileName, true))) {
+            for (int i = 0; i < matrixRows; i++) {
+                for (int j = 0; j < matrixCol; j++) {
+                    writeMatrix.write(matrix[i][j] + " ");
+                }
+                writeMatrix.newLine();
+            }
+        } catch (IOException error) {
+            error.printStackTrace();
+        }
     }
 
     public static void main(String args[]) {
@@ -402,6 +438,12 @@ public class MatrixEvaluator {
         int[][] symmetricMatrix = generateSymmetricMatrix(matrix);
 
         // Write the closures to a file
+        String reflexiveFile = "reflexive_" + fileName;
+        String symmetricFile = "symmetric_" + fileName;
+        writeMatrixToFile(reflexiveMatrix, reflexiveFile);
+        writeMatrixToFile(symmetricMatrix, symmetricFile);
+        System.out.println("The reflexive closure can be found in " + reflexiveFile);
+        System.out.println("The symmetrix closure can be found in " + symmetricFile);
 
     }
 
