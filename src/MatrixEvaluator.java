@@ -309,6 +309,69 @@ public class MatrixEvaluator {
         return pathOrCycle;
     }
 
+    /**
+     * generateReflexiveClosure - Finds the reflexive closure of a given matrix
+     * and returns the reflexive closure matrix as a 2D int array. This is
+     * achieved by setting all entries in the main diagonal to "1".
+     *
+     * @param matrix The input matrix for which to find the reflexive closure
+     * @return The reflexive closure of the input matrix as a 2D int array
+     */
+    public static int[][] generateReflexiveClosure(int[][] matrix) {
+        int reflexiveRows = matrix.length;
+        int reflexiveCol = matrix[0].length;
+        int[][] reflexiveMatrix = new int[reflexiveRows][reflexiveCol];
+
+        // Copy the matrix into the reflexiveMatrix
+        for (int i = 0; i < reflexiveRows; i++) {
+            for (int j = 0; j < reflexiveCol; j++) {
+                reflexiveMatrix[i][j] = matrix[i][j];
+            }
+        }
+
+        // Change the main diagonal to all 1's
+        for (int i = 0; i < reflexiveRows; i++) {
+            for (int j = 0; j < reflexiveCol; j++) {
+                if (i == j) {
+                    reflexiveMatrix[i][j] = 1;
+                }
+            }
+        }
+        return reflexiveMatrix;
+    }
+
+    /**
+     * generateSymmetricMatrix - Finds the symmetric closure of a given matrix,
+     * and returns the symmetric closure matrix as a 2D int array. This is done
+     * by checking each index in the input matrix (as a 2D int array) such that
+     * if index[i][j] == 1, then set index[j][i] = 1
+     *
+     * @param matrix The input matrix for which to find the symmetric closure
+     * @return The symmetric closure of the input matrix as a 2D int array
+     */
+    private static int[][] generateSymmetricMatrix(int[][] matrix) {
+        int symmetricRows = matrix.length;
+        int symmetricCol = matrix[0].length;
+        int[][] symmetricMatrix = new int[symmetricRows][symmetricCol];
+
+        // Copy the matrix into the symmetricMatrix
+        for (int i = 0; i < symmetricRows; i++) {
+            for (int j = 0; j < symmetricCol; j++) {
+                symmetricMatrix[i][j] = matrix[i][j];
+            }
+        }
+
+        // Update the matrix so that for every ordered pair (i,j) = (j,i)
+        for (int i = 0; i < symmetricRows; i++) {
+            for (int j = 0; j < symmetricCol; j++) {
+                if (symmetricMatrix[i][j] == 1) {
+                    symmetricMatrix[j][i] = 1;
+                }
+            }
+        }
+        return symmetricMatrix;
+    }
+
     public static void main(String args[]) {
 
         // Variables with properties of the matrix
@@ -333,6 +396,12 @@ public class MatrixEvaluator {
         isWalk(vertexSequence, matrix);
 
         // Find the various closures of the graph
+        int[][] reflexiveMatrix = generateReflexiveClosure(matrix);
+        int[][] symmetricMatrix = generateSymmetricMatrix(matrix);
+
+        // Write the closures to a file
 
     }
+
+
 }
