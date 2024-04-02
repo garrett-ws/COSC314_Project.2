@@ -29,14 +29,11 @@ public class MatrixEvaluator {
      * Prompt the user to input the name of the file containing the matrix, read the
      * matrix into a String, then remove all whitespace from the String.
      *
-     * @param matrixString A string to store the matrix read from the file
-     * @return The matrix as a  string with whitespace removed
+     * @param matrixString A string to store the matrix read from the file.
+     * @param matrixFile The name or path of the file containing the matrix.
+     * @return The matrix as a  string with whitespace removed.
      */
-    public static String readMatrixFile(String matrixString) {
-        Scanner userInput = new Scanner(System.in);
-        System.out.println("Enter the name of the file that has the matrix ");
-        String fileName = userInput.nextLine();
-        File matrixFile = new File(fileName);
+    public static String readMatrixFile(String matrixString, String matrixFile) {
 
         StringBuilder buildMatrixString = new StringBuilder();
         BufferedReader matrixBuffered = null;
@@ -380,8 +377,14 @@ public class MatrixEvaluator {
         int[][] matrix = new int[matrixRows][matrixColumns];
         String matrixString = null; // Used to convert the .txt file to a String
 
+        // Prompt the user for the file
+        Scanner userInput = new Scanner(System.in);
+        System.out.println("Enter the name of the file that has the matrix ");
+        String fileName = userInput.nextLine();
+        File matrixFile = new File(fileName);
+
         // Read the file containing the matrix into a String
-        matrixString = readMatrixFile(matrixString);
+        matrixString = readMatrixFile(matrixString, fileName);
 
         // Convert the String into a 2D int array
         convertStringTo2DIntArray(matrixRows, matrixColumns, matrix, matrixString);
@@ -389,7 +392,6 @@ public class MatrixEvaluator {
         // Ask the user to input a sequence of vertices
         String vertexSequence = null;
         vertexSequence = getVertexSequence();
-        System.out.println(vertexSequence); //Debug line
 
         // Determine if the sequence of vertices is a walk, and if so the length of the
         // walk, and what type of walk (open, closed, trail, path, circuit, cycle)
