@@ -297,11 +297,13 @@ public class MatrixEvaluator {
                     break;
                 }
             }
+            // Check if the vertex has already been visited
             if (verticesVisitedList.contains(vertex)){
                 pathOrCycle = false;
                 break;
             }
-            if (vertex != ',') {
+            // Add the current vertex to the list of visited vertices
+            if (vertex != ',') { // Don't add commas, else they'll cause false negatives
                 verticesVisitedList.add(vertex);
             }
 
